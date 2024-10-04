@@ -5,7 +5,8 @@
 
 body {
     background-color: #1f2937;
-    margin:  10px;
+    margin:  0;
+    /* margin:  10px; */
 }
 
 nav {
@@ -73,4 +74,44 @@ nav {
     padding-top:  60px;
     display:  flex;
     justify-content: space-around;
+    padding-bottom:  100px;
+}
+
+.infosection {
+    padding-bottom:  100px;
+    background-color: #ffffff;
+}
+
+.infosection h1 {
+    text-align:  center;
+    padding-top:  40px;
+    padding-bottom:  40px;
+    font-size:  60px;
+}
+
+.featureblocks {
+    display:  flex;
+    justify-content: space-evenly;
+}
+
+.block1 div {
+    border-radius:  10px;
+    outline:  solid #3b82f6;
+    background-color:  white;
+    width:  300px;
+    height:  350px;
+}
+
+.block1 h5 {
+    color:  #aeb7c9;
+    font-size:  20px;
+    text-align: center;
+}
+
+.quotesection {
+    background-color:  #e5e7eb;
+}
+
+.quotesection h1 {
+    margin-top:  0px;
 }
