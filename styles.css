@@ -3,6 +3,11 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+body {
+    background-color: #1f2937;
+    margin:  10px;
+}
+
 nav {
   width: 100%;
   background-color: #1f2937;
@@ -30,4 +35,42 @@ nav {
   list-style: none;
   display: flex;
   gap: 60px;
+}
+
+.herosectiontext p {
+    margin-top:  15px;
+    min-width:  30px;
+    max-width:  600px;
+    font-size:  35px;
+    color:  #cec1c1;
+}
+
+.herosectiontext h1 {
+    color:  #ffffff;
+    min-width:  30px;
+    max-width:  600px;
+    font-size:  80px;
+    margin-bottom:  0px;
+}
+
+.herosectiontext button {
+    font-size:  30px;
+    padding-top:  10px;
+    padding-bottom:  10px;
+    padding-left:  30px;
+    padding-right:  30px;
+    display:  flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border:  none;
+    border-radius:  10px;
+    background-color:  #3b82f6;
+    color:  white;
+}
+
+.herosection {
+    padding-top:  60px;
+    display:  flex;
+    justify-content: space-around;
 }
