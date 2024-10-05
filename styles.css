@@ -699,14 +699,16 @@ body {
 }
 
 .highlights-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: clamp(1.5rem, 3vw, 3rem);
+  display: flex;
+  flex-direction:  column;
+  gap:  30px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .highlight-card {
+    padding:  20px;
+    margin-bottom:  30px;
   background-color: #FFFFFF;
   border-radius: 15px;
   overflow: hidden;
