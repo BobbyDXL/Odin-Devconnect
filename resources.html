@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevConnect Resources - Your Gateway to Developer Collaboration</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="DevConnect Resources: A curated collection of developer resources to enhance your skills and stay updated with the latest in tech." />
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f5f5;
+            --accent-color: #ff6b6b;
+            --text-color: #333;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .hero-cta:hover {
+            background-color: #4a90e2;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resource-card h3 {
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+        
+        .resource-card ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .resource-card ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-card ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .resource-card ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .resource-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color:  #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo" />
+            </a>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#forum">Forum</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="/login.html" class="login-btn">Log In</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Credits <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="https://unsplash.com" target="_blank">Unsplash - Images</a>
+                        <a href="https://unsplash.com/@anniespratt" target="_blank">Annie Spratt - Hero Image</a>
+                        <a href="https://unsplash.com/@yancymin" target="_blank">Yancy Min - Code Collaboration Image</a>
+                        <a href="https://unsplash.com/@goumbik" target="_blank">Lukas Blazek - Learning Resources Image</a>
+                        <a href="https://unsplash.com/@wocintechchat" target="_blank">Christina @ wocintechchat.com - Community Support Image</a>
+                        <a href="https://fontawesome.com" target="_blank">Font Awesome - Icons</a>
+                        <a href="https://fonts.google.com" target="_blank">Google Fonts - Typography</a>
+                        <a href="https://iconfinder.com" target="_blank">Iconfinder - Tech Stack Icons</a>
+                        <a href="https://iconscout.com" target="_blank">Iconscout - Tech Stack Icons</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>DevConnect Resources</h1>
+                <p>Explore our curated collection of developer resources to enhance your skills and stay updated with the latest in tech.</p>
+                <a href="#resources" class="hero-cta">Explore Resources</a>
+            </div>
+        </section>
+
+        <section class="resources-grid" id="resources">
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Coding Tutorials">
+                <i class="fas fa-code fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Coding Tutorials</h3>
+                <ul>
+                    <li><a href="https://www.freecodecamp.org/" target="_blank">freeCodeCamp</a></li>
+                    <li><a href="https://www.codecademy.com/" target="_blank">Codecademy</a></li>
+                    <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a></li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1448&q=80" alt="Documentation">
+                <i class="fas fa-book fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Documentation</h3>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a></li>
+                    <li><a href="https://devdocs.io/" target="_blank">DevDocs</a></li>
+                    <li><a href="https://docs.github.com/en" target="_blank">GitHub Docs</a></li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1531498860502-7c67cf02f657?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Community Forums">
+                <i class="fas fa-users fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Community Forums</h3>
+                <ul>
+                    <li><a href="https://stackoverflow.com/" target="_blank">Stack Overflow</a></li>
+                    <li><a href="https://dev.to/" target="_blank">DEV Community</a></li>
+                    <li><a href="https://www.reddit.com/r/programming/" target="_blank">r/programming</a></li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Online Courses">
+                <i class="fas fa-laptop-code fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Online Courses</h3>
+                <ul>
+                    <li><a href="https://www.coursera.org/browse/computer-science" target="_blank">Coursera</a></li>
+                    <li><a href="https://www.udemy.com/topic/web-development/" target="_blank">Udemy</a></li>
+                    <li><a href="https://www.edx.org/learn/computer-programming" target="_blank">edX</a></li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Developer Tools">
+                <i class="fas fa-tools fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Developer Tools</h3>
+                <ul>
+                    <li><a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a></li>
+                    <li><a href="https://git-scm.com/" target="_blank">Git</a></li>
+                    <li><a href="https://www.postman.com/" target="_blank">Postman</a></li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Tech News">
+                <i class="fas fa-newspaper fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Tech News</h3>
+                <ul>
+                    <li><a href="https://techcrunch.com/" target="_blank">TechCrunch</a></li>
+                    <li><a href="https://www.theverge.com/" target="_blank">The Verge</a></li>
+                    <li><a href="https://www.wired.com/" target="_blank">WIRED</a></li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="More Resources">
+                <i class="fas fa-plus-circle fa-3x" style="color: var(--primary-color);"></i>
+                <h3>Additional Resources</h3>
+                <ul>
+                    <li><a href="exploreresources.html">Click here for the full list</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Want more curated resources?</h2>
+                <p>Join DevConnect to access exclusive content and connect with fellow developers!</p>
+                <a href="signup.html" class="cta-button">Sign Up Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <img style="padding-bottom: 20px;" src="img/Devconnect logo.png" alt="DevConnect Logo" width="200px" />
+                <p>Empowering developers to connect, learn, and innovate together.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#forum">Forum</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for the latest updates and exclusive content.</p>
+                <form action="#" method="post">
+                    <input type="email" name="email" placeholder="Enter your email" required />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DevConnect by David Ege-Obetta. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const hamburger = document.getElementById('hamburger-menu');
+            const navMenu = document.getElementById('nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
