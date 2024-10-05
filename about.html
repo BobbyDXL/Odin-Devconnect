@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About DevConnect - Empowering Developers Since 2020</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="Discover the inspiring journey of DevConnect, from its inception in 2020 to becoming a global hub for developers. Learn about our mission, values, and the team behind our success.">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .about-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        .about-section {
+            margin-bottom: 50px;
+        }
+        .about-section h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .about-section p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .left {
+            left: 0;
+        }
+        .right {
+            left: 50%;
+        }
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid var(--primary-color);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--primary-color);
+        }
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid var(--primary-color);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--primary-color) transparent transparent;
+        }
+        .right::after {
+            left: -16px;
+        }
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .team-member {
+            text-align: center;
+        }
+        .team-member img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .value-item {
+            text-align: center;
+            padding: 30px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .value-item:hover {
+            transform: translateY(-5px);
+        }
+        .value-item i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo">
+            </a>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="#forum">Forum</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="/login.html" class="login-btn">Log In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <h1>Our Story</h1>
+            <p>Empowering developers to connect, learn, and innovate since 2020</p>
+        </section>
+
+        <div class="about-content">
+            <section class="about-section">
+                <h2>The DevConnect Journey</h2>
+                <p>DevConnect was born out of necessity and inspiration during the global pandemic of 2020. As the world grappled with isolation, our founders, Sarah Chen and Mike Rodriguez, recognized an opportunity to create a digital haven for developers worldwide. What started as a simple idea during a virtual hackathon has blossomed into a thriving global community, connecting developers across continents and fostering innovation in ways we never imagined.</p>
+                <p>Our platform has evolved from a basic forum to a comprehensive ecosystem for developers, offering everything from peer-to-peer learning to collaborative coding environments. We've weathered challenges, celebrated milestones, and continuously adapted to the ever-changing landscape of technology. Through it all, our commitment to empowering developers has remained unwavering.</p>
+            </section>
+
+            <section class="about-section">
+                <h2>Our Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>2020</h3>
+                            <p>DevConnect is conceived during a virtual hackathon. The first version launches as a simple forum with 100 beta users.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>2021</h3>
+                            <p>We introduce peer-to-peer mentoring and reach 50,000 registered users. Our first virtual conference, DevCon 2021, attracts developers from 50 countries.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>2022</h3>
+                            <p>Launch of our collaborative code editor and project showcase features. DevConnect hits 500,000 users and secures Series A funding.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <h3>2023</h3>
+                            <p>We reach the milestone of 1 million registered users. Partnerships with leading tech companies bring exclusive learning resources to our platform.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <h3>2024</h3>
+                            <p>DevConnect mobile app launches. We introduce AI-powered coding assistance and expand our global team to 100 employees across 15 countries.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>Our Mission</h2>
+                <p>At DevConnect, our mission is to democratize access to technology education and foster a global community of developers who support and inspire each other. We believe that by breaking down barriers to learning and collaboration, we can empower individuals to drive innovation and create positive change through technology.</p>
+                <p>We're committed to:</p>
+                <ul>
+                    <li>Providing high-quality, accessible learning resources for developers at all stages of their careers</li>
+                    <li>Facilitating meaningful connections and collaborations within the global developer community</li>
+                    <li>Promoting diversity and inclusion in the tech industry</li>
+                    <li>Staying at the forefront of technological advancements and sharing that knowledge with our community</li>
+                    <li>Creating opportunities for developers to showcase their skills and find career opportunities</li>
+                </ul>
+            </section>
+
+            <section class="about-section">
+                <h2>Our Values</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <i class="fas fa-users"></i>
+                        <h3>Community First</h3>
+                        <p>We believe in the power of community to drive learning, innovation, and growth.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Continuous Innovation</h3>
+                        <p>We're committed to staying ahead of the curve and bringing the latest tech to our users.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-hands-helping"></i>
+                        <h3>Inclusivity</h3>
+                        <p>We strive to create a welcoming environment for developers from all backgrounds.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Integrity</h3>
+                        <p>We uphold the highest standards of honesty and transparency in all our operations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>Meet Our Team</h2>
+                <p>Behind DevConnect is a passionate team of developers, designers, and community builders who work tirelessly to make our platform the best it can be. While we've grown significantly since our inception, we maintain the same entrepreneurial spirit and dedication to our community that drove us from the start.</p>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Sarah Chen">
+                        <h3>Sarah Chen</h3>
+                        <p>Co-founder & CEO</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Mike Rodriguez">
+                        <h3>Mike Rodriguez</h3>
+                        <p>Co-founder & CTO</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Emily Zhao">
+                        <h3>Emily Zhao</h3>
+                        <p>Head of Community</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Alex Johnson">
+                        <h3>Alex Johnson</h3>
+                        <p>Lead Developer</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>Join Our Community</h2>
+                <p>Whether you're a coding novice or a seasoned pro, there's a place for you in the DevConnect community. Join us in our mission to make the world of development more accessible, collaborative, and innovative.</p>
+                <a href="signup.html" class="cta-button">Become a Member Today</a>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <img style="padding-bottom: 20px;" src="img/Devconnect logo.png" alt="DevConnect Logo" width="200px">
+                <p>Empowering developers to connect, learn, and innovate together.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="#forum">Forum</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for the latest updates and exclusive content.</p>
+                <form action="#" method="post">
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DevConnect by David Ege-Obetta. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const hamburger = document.getElementById('hamburger-menu');
+            const navMenu = document.getElementById('nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
+
