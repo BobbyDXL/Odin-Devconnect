@@ -3,68 +3,209 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevConnect by Odin</title>
+    <title>DevConnect by Odin - Your Gateway to Developer Collaboration</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="DevConnect: A platform for developers to connect, share resources, and collaborate on projects." />
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
       <nav>
-        <div class="navs">
-          <img
-            class="logo"
-            src="img/Devconnect logo.png"
-            alt="DevConnect Logo"
-          />
-          <ul class="navlinks">
-            <li>Resources</li>
-            <li>Forum</li>
-            <li>About</li>
-          </ul>
-        </div>
+        <a href="index.html" class="logo-link">
+          <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo" />
+        </a>
+        <ul class="nav-links">
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#forum">Forum</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#login" class="login-btn">Log In</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+          <i class="fas fa-bars"></i>
+        </button>
       </nav>
     </header>
-    <section class="herosection">
-      <div class="herosectiontext">
-        <h1>This website is awesome</h1>
-        <p>
-          This website has some subtext that goes here under tthe main title.
-          It's a smaller font and the color is lower contrast
-        </p>
-        <button>Sign up</button>
+    <main>
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1>Empower Your Developer Journey</h1>
+          <p>
+            Connect with fellow developers, access curated resources, and elevate your coding skills with DevConnect. 
+            Join our thriving community and turn your ideas into reality.
+          </p>
+          <div class="cta-buttons">
+            <a href="#signup" class="cta-button primary">Join DevConnect</a>
+            <a href="#demo" class="cta-button secondary">Watch Demo</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Developers collaborating" loading="lazy" />
+        </div>
+      </section>
+      <section class="info-section">
+        <h2>Features of DevConnect</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Code Collaboration" class="feature-image">
+            <i class="fas fa-code feature-icon"></i>
+            <h3>Code Collaboration</h3>
+            <p>Work together on projects in real-time with our collaborative coding environment.</p>
+          </div>
+          <div class="feature-card">
+            <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Learning Resources" class="feature-image">
+            <i class="fas fa-book feature-icon"></i>
+            <h3>Learning Resources</h3>
+            <p>Access a vast library of tutorials, articles, and courses to enhance your skills.</p>
+          </div>
+          <div class="feature-card">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Community Support" class="feature-image">
+            <i class="fas fa-users feature-icon"></i>
+            <h3>Community Support</h3>
+            <p>Get help, share knowledge, and network with developers from around the world.</p>
+          </div>
+          <div class="feature-card">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Project Showcase" class="feature-image">
+            <i class="fas fa-laptop-code feature-icon"></i>
+            <h3>Project Showcase</h3>
+            <p>Showcase your projects, get feedback, and discover inspiring work from others.</p>
+          </div>
+        </div>
+      </section>
+      <section class="how-it-works-section">
+        <h2>How DevConnect Works</h2>
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-icon">1</div>
+            <h3>Sign Up</h3>
+            <p>Create your account and set up your developer profile.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">2</div>
+            <h3>Connect</h3>
+            <p>Join communities, follow developers, and start networking.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">3</div>
+            <h3>Collaborate</h3>
+            <p>Find projects, share ideas, and code together in real-time.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">4</div>
+            <h3>Grow</h3>
+            <p>Learn from others, showcase your work, and advance your career.</p>
+          </div>
+        </div>
+      </section>
+      <section class="tech-stack-section">
+        <h2>Our Tech Stack</h2>
+        <div class="tech-grid">
+          <div class="tech-item">
+            <img src="https://cdn4.iconfinder.com/data/icons/logos-3/600/React.js_logo-512.png" alt="React" />
+            <p>React</p>
+          </div>
+          <div class="tech-item">
+            <img src="https://cdn.iconscout.com/icon/free/png-256/node-js-1174925.png" alt="Node.js" />
+            <p>Node.js</p>
+          </div>
+          <div class="tech-item">
+            <img src="https://cdn.iconscout.com/icon/free/png-256/mongodb-3-1175138.png" alt="MongoDB" />
+            <p>MongoDB</p>
+          </div>
+          <div class="tech-item">
+            <img src="https://cdn.iconscout.com/icon/free/png-256/aws-1869025-1583149.png" alt="AWS" />
+            <p>AWS</p>
+          </div>
+        </div>
+      </section>
+      <section class="testimonial-section">
+        <div class="testimonial-container">
+          <blockquote>
+            <p>
+              "DevConnect has been a game-changer for my career. The resources and community support 
+              have helped me grow from a beginner to a confident full-stack developer. It's more than 
+              just a platform; it's a launchpad for success in the tech world."
+            </p>
+            <footer>
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Sarah Johnson" class="testimonial-avatar">
+              <cite>— Sarah Johnson, Software Engineer at TechInnovate</cite>
+            </footer>
+          </blockquote>
+        </div>
+      </section>
+      <section class="latest-projects-section">
+        <h2>Latest Community Projects</h2>
+        <div class="project-grid">
+          <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="AI-Powered Task Manager" />
+            <h3>AI-Powered Task Manager</h3>
+            <p>A smart to-do list app that uses machine learning to prioritize tasks.</p>
+            <a href="#" class="project-link">View Project</a>
+          </div>
+          <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1313&q=80" alt="Eco-Friendly Shopping Assistant" />
+            <h3>Eco-Friendly Shopping Assistant</h3>
+            <p>An app that helps users make environmentally conscious shopping decisions.</p>
+            <a href="#" class="project-link">View Project</a>
+          </div>
+          <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1617802690992-15d93263d3a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Virtual Reality Classroom" />
+            <h3>Virtual Reality Classroom</h3>
+            <p>An immersive learning experience for students in a virtual environment.</p>
+            <a href="#" class="project-link">View Project</a>
+          </div>
+        </div>
+      </section>
+      <section class="cta-section">
+        <div class="cta-content">
+          <h2>Ready to elevate your coding journey?</h2>
+          <p>Join DevConnect today and unlock a world of opportunities!</p>
+          <a href="#" class="cta-button primary">Sign Up Now</a>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <img src="img/Devconnect-logo-footer.png" alt="DevConnect Logo" />
+          <p>Empowering developers to connect, learn, and innovate together.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#forum">Forum</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Connect With Us</h4>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Updated</h4>
+          <p>Subscribe to our newsletter for the latest updates and exclusive content.</p>
+          <form action="#" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
       </div>
-      <div>
-        <img src="img/Frame 10.png" alt="sectionimage" />
+      <div class="footer-bottom">
+        <p>&copy; 2023 DevConnect by Odin. All rights reserved.</p>
       </div>
-    </section>
-    <section class="infosection">
-      <h1>Features of DevConnect</h1>
-      <div class="featureblocks">
-        <div class="block1">
-          <div></div>
-          <h5>this is some subtext<br />under an illustration<br />or image</h5>
-        </div>
-        <div class="block1">
-          <div></div>
-          <h5>this is some subtext<br />under an illustration<br />or image</h5>
-        </div>
-        <div class="block1">
-          <div></div>
-          <h5>this is some subtext<br />under an illustration<br />or image</h5>
-        </div>
-        <div class="block1">
-          <div></div>
-          <h5>this is some subtext<br />under an illustration<br />or image</h5>
-        </div>
-      </div>
-    </section>
-    <section class="quotesection">
-      <h1>
-        <em
-          >This is an inspiring quote, or a testimonial from a customer. Maybe
-          it's just filling up space, or maybe people will actually read it. Who
-          knows? All I know is that it looks nice.</em
-        >
-      </h1>
-    </section>
+    </footer>
+    <script src="js/main.js"></script>
   </body>
 </html>
