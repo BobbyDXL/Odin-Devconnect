@@ -914,6 +914,22 @@ footer::before {
   position: relative;
 }
 
+.footer-column input {
+    margin-top:  20px;
+    padding:  10px;
+    border:  none;
+    border-radius:  10px;
+}
+
+.footer-column button {
+    margin-top:  10px;
+    padding:  10px;
+    border:  none;
+    border-radius:  10px;
+    color:  white;
+    background-color: #0077b6;
+}
+
 .footer-column a::after {
   content: "";
   position: absolute;
