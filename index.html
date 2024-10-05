@@ -16,7 +16,12 @@
         <a href="index.html" class="logo-link">
           <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo" />
         </a>
-        <ul class="nav-links">
+        <div class="hamburger" id="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="nav-menu">
           <li><a href="#resources">Resources</a></li>
           <li><a href="#forum">Forum</a></li>
           <li><a href="#about">About</a></li>
@@ -36,9 +41,6 @@
             </div>
           </li>
         </ul>
-        <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
-          <i class="fas fa-bars"></i>
-        </button>
       </nav>
     </header>
     <main>
@@ -301,5 +303,16 @@
       </div>
     </footer>
     <script src="js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const hamburger = document.getElementById('hamburger-menu');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+          hamburger.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      });
+    </script>
   </body>
 </html>
