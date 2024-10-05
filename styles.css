@@ -499,6 +499,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  border-radius: 20px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left:  10px;
+  padding-right: 10px;
 }
 
 .testimonial-avatar {
