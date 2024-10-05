@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevConnect Forum</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .forum-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .forum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .forum-search {
+            display: flex;
+            align-items: center;
+        }
+        .forum-search input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        .forum-search button {
+            padding: 10px 15px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .post {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+        .post:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .post-author {
+            font-weight: bold;
+        }
+        .post-meta {
+            font-size: 0.8em;
+            color: #777;
+        }
+        .post-content {
+            margin-bottom: 15px;
+        }
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .post-action {
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .post-action:hover {
+            color: #4a90e2;
+        }
+        .comments {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .new-post-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .new-post-form textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .new-post-form button {
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .new-post-form button:hover {
+            background-color: #3a7bc8;
+        }
+        .comment-form {
+            display: flex;
+            margin-top: 10px;
+        }
+        .comment-form input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        .comment-form button {
+            padding: 10px 15px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .pagination button.active {
+            background-color: #4a90e2;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo">
+            </a>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="forum.html">Forum</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="/login.html" class="login-btn">Log In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="forum-container">
+        <div class="forum-header">
+            <h1>DevConnect Forum</h1>
+            <div class="forum-search">
+                <input type="text" placeholder="Search forum...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <form class="new-post-form">
+            <textarea placeholder="What's on your mind?"></textarea>
+            <button type="submit">Post</button>
+        </form>
+
+        <div id="posts-container">
+            <!-- Posts will be dynamically added here -->
+        </div>
+
+        <div class="pagination">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>About DevConnect</h4>
+                <p>Empowering developers to connect, learn, and innovate together.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DevConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to generate a random username
+        function generateRandomUsername() {
+            const adjectives = ['Happy', 'Clever', 'Brave', 'Curious', 'Friendly'];
+            const nouns = ['Coder', 'Developer', 'Programmer', 'Engineer', 'Hacker'];
+            const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+            const randomNumber = Math.floor(Math.random() * 1000);
+            return `${randomAdjective}${randomNoun}${randomNumber}`;
+        }
+
+        // Get or set the user's random username
+        let username = localStorage.getItem('username');
+        if (!username) {
+            username = generateRandomUsername();
+            localStorage.setItem('username', username);
+        }
+
+        // Function to save posts to localStorage
+        function savePosts(posts) {
+            localStorage.setItem('posts', JSON.stringify(posts));
+        }
+
+        // Function to load posts from localStorage
+        function loadPosts() {
+            const savedPosts = localStorage.getItem('posts');
+            return savedPosts ? JSON.parse(savedPosts) : [];
+        }
+
+        // Load initial posts from localStorage or use dummy data if empty
+        let posts = loadPosts();
+        if (posts.length === 0) {
+            posts = [
+                {
+                    id: 1,
+                    author: "CuriousCoder123",
+                    content: "Just finished my first React project! Any tips for optimizing performance?",
+                    likes: ["BraveDeveloper456", "CleverEngineer789"],
+                    comments: [
+                        { author: "FriendlyHacker234", content: "Great job! Have you tried using React.memo for component memoization?" },
+                        { author: "HappyProgrammer567", content: "Congratulations! Make sure to use the React DevTools for performance profiling." }
+                    ],
+                    timestamp: new Date('2023-06-01T10:00:00').toISOString()
+                },
+                {
+                    id: 2,
+                    author: "BraveEngineer890",
+                    content: "Looking for collaborators on an open-source Python project. Anyone interested?",
+                    likes: ["CuriousCoder123"],
+                    comments: [
+                        { author: "CleverDeveloper321", content: "Sounds interesting! What's the project about?" },
+                        { author: "FriendlyProgrammer654", content: "I'd love to help! Do you have a GitHub repo set up?" }
+                    ],
+                    timestamp: new Date('2023-06-02T14:30:00').toISOString()
+                }
+            ];
+            savePosts(posts);
+        }
+
+        // Function to create a post element
+        function createPostElement(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+            postElement.innerHTML = `
+                <div class="post-header">
+                    <div>
+                        <span class="post-author">${post.author}</span>
+                        <span class="post-meta">${formatDate(post.timestamp)}</span>
+                    </div>
+                </div>
+                <div class="post-content">${post.content}</div>
+                <div class="post-actions">
+                    <button class="post-action like-btn ${post.likes.includes(username) ? 'liked' : ''}" data-post-id="${post.id}">
+                        <i class="fas fa-thumbs-up"></i> Like (${post.likes.length})
+                    </button>
+                    <button class="post-action comment-btn" data-post-id="${post.id}">
+                        <i class="fas fa-comment"></i> Comment (${post.comments.length})
+                    </button>
+                </div>
+                <div class="comments">
+                    ${post.comments.map(comment => `
+                        <div class="comment">
+                            <strong>${comment.author}:</strong> ${comment.content}
+                        </div>
+                    `).join('')}
+                </div>
+                <form class="comment-form" data-post-id="${post.id}">
+                    <input type="text" placeholder="Write a comment..." required>
+                    <button type="submit">Send</button>
+                </form>
+            `;
+            return postElement;
+        }
+
+        // Function to render all posts
+        function renderPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            posts.forEach(post => {
+                postsContainer.appendChild(createPostElement(post));
+            });
+        }
+
+        // Function to format date
+        function formatDate(date) {
+            const now = new Date();
+            const diff = now - new Date(date);
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+            if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+            return 'Just now';
+        }
+
+        // Event listener for new post form
+        document.querySelector('.new-post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const content = this.querySelector('textarea').value;
+            if (content.trim()) {
+                const newPost = {
+                    id: Date.now(),
+                    author: username,
+                    content: content,
+                    likes: [],
+                    comments: [],
+                    timestamp: new Date().toISOString()
+                };
+                posts.unshift(newPost);
+                savePosts(posts);
+                renderPosts();
+                this.reset();
+            }
+        });
+
+        // Event delegation for post actions
+        document.getElementById('posts-container').addEventListener('click', function(e) {
+            const postId = parseInt(e.target.closest('[data-post-id]')?.dataset.postId);
+            const post = posts.find(p => p.id === postId);
+
+            if (e.target.closest('.like-btn')) {
+                if (post) {
+                    const likeIndex = post.likes.indexOf(username);
+                    if (likeIndex === -1) {
+                        post.likes.push(username);
+                    } else {
+                        post.likes.splice(likeIndex, 1);
+                    }
+                    savePosts(posts);
+                    renderPosts();
+                }
+            }
+        });
+
+        // Event delegation for comment forms
+        document.getElementById('posts-container').addEventListener('submit', function(e) {
+            if (e.target.classList.contains('comment-form')) {
+                e.preventDefault();
+                const postId = parseInt(e.target.dataset.postId);
+                const post = posts.find(p => p.id === postId);
+                const commentContent = e.target.querySelector('input').value;
+                if (post && commentContent.trim()) {
+                    post.comments.push({ author: username, content: commentContent });
+                    savePosts(posts);
+                    renderPosts();
+                    e.target.reset();
+                }
+            }
+        });
+
+        // Search functionality
+        document.querySelector('.forum-search button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.forum-search input').value.toLowerCase();
+            const filteredPosts = posts.filter(post => 
+                post.content.toLowerCase().includes(searchTerm) || 
+                post.author.toLowerCase().includes(searchTerm)
+            );
+            renderFilteredPosts(filteredPosts);
+        });
+
+        function renderFilteredPosts(filteredPosts) {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = '';
+            filteredPosts.forEach(post => {
+                postsContainer.appendChild(createPostElement(post));
+            });
+        }
+
+        // Initial render
+        renderPosts();
+
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const hamburger = document.getElementById('hamburger-menu');
+            const navMenu = document.getElementById('nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
