@@ -462,10 +462,16 @@
                 const post = posts.find(p => p.id === postId);
                 const commentContent = e.target.querySelector('input').value;
                 if (post && commentContent.trim()) {
+                    if (!Array.isArray(post.comments)) {
+                        post.comments = [];
+                    }
                     post.comments.push({ author: username, content: commentContent });
-                    savePosts(posts);
-                    renderPosts();
-                    e.target.reset();
+                    savePosts(posts).then(() => {
+                        renderPosts();
+                        e.target.reset();
+                    }).catch(error => {
+                        console.error("Error saving comment:", error);
+                    });
                 }
             }
         });
