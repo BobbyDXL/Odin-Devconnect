@@ -276,14 +276,19 @@
 
         // Function to save posts to Firebase
         function savePosts(posts) {
-            database.ref('posts').set(posts);
+            console.log("Saving posts to Firebase:", posts);
+            return database.ref('posts').set(posts);
         }
 
         // Function to load posts from Firebase
         function loadPosts(callback) {
+            console.log("Loading posts...");
             database.ref('posts').once('value').then((snapshot) => {
                 const posts = snapshot.val() || [];
+                console.log("Loaded posts:", posts);
                 callback(posts);
+            }).catch(error => {
+                console.error("Error loading posts:", error);
             });
         }
 
@@ -392,10 +397,15 @@
                     comments: [],
                     timestamp: new Date().toISOString()
                 };
+                console.log("Saving new post:", newPost);
                 posts.unshift(newPost);
-                savePosts(posts);
-                renderPosts();
-                this.reset();
+                savePosts(posts).then(() => {
+                    console.log("Post saved successfully");
+                    renderPosts();
+                    this.reset();
+                }).catch(error => {
+                    console.error("Error saving post:", error);
+                });
             }
         });
 
@@ -454,6 +464,7 @@
 
         // Listen for changes in the Firebase database
         database.ref('posts').on('value', (snapshot) => {
+            console.log("Received update from Firebase");
             posts = snapshot.val() || [];
             renderPosts();
         });
