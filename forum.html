@@ -237,7 +237,26 @@
         </div>
     </footer>
 
+    <!-- Add Firebase SDK before your closing </body> tag -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <script>
+        // Initialize Firebase (replace with your own config)
+        const firebaseConfig = {
+                apiKey: "AIzaSyAgcPHAAOq3SieD4NqCsH-18_aUuoub0_k",
+                authDomain: "devconnect-by-odin.firebaseapp.com",
+                projectId: "devconnect-by-odin",
+                storageBucket: "devconnect-by-odin.appspot.com",
+                messagingSenderId: "120220982267",
+                appId: "1:120220982267:web:8d16a70d30383fc4c6895e",
+                measurementId: "G-ML0JGNSH0C"
+            };
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the database service
+        const database = firebase.database();
+
         // Function to generate a random username
         function generateRandomUsername() {
             const adjectives = ['Happy', 'Clever', 'Brave', 'Curious', 'Friendly'];
@@ -255,46 +274,51 @@
             localStorage.setItem('username', username);
         }
 
-        // Function to save posts to localStorage
+        // Function to save posts to Firebase
         function savePosts(posts) {
-            localStorage.setItem('posts', JSON.stringify(posts));
+            database.ref('posts').set(posts);
         }
 
-        // Function to load posts from localStorage
-        function loadPosts() {
-            const savedPosts = localStorage.getItem('posts');
-            return savedPosts ? JSON.parse(savedPosts) : [];
+        // Function to load posts from Firebase
+        function loadPosts(callback) {
+            database.ref('posts').once('value').then((snapshot) => {
+                const posts = snapshot.val() || [];
+                callback(posts);
+            });
         }
 
-        // Load initial posts from localStorage or use dummy data if empty
-        let posts = loadPosts();
-        if (posts.length === 0) {
-            posts = [
-                {
-                    id: 1,
-                    author: "CuriousCoder123",
-                    content: "Just finished my first React project! Any tips for optimizing performance?",
-                    likes: ["BraveDeveloper456", "CleverEngineer789"],
-                    comments: [
-                        { author: "FriendlyHacker234", content: "Great job! Have you tried using React.memo for component memoization?" },
-                        { author: "HappyProgrammer567", content: "Congratulations! Make sure to use the React DevTools for performance profiling." }
-                    ],
-                    timestamp: new Date('2023-06-01T10:00:00').toISOString()
-                },
-                {
-                    id: 2,
-                    author: "BraveEngineer890",
-                    content: "Looking for collaborators on an open-source Python project. Anyone interested?",
-                    likes: ["CuriousCoder123"],
-                    comments: [
-                        { author: "CleverDeveloper321", content: "Sounds interesting! What's the project about?" },
-                        { author: "FriendlyProgrammer654", content: "I'd love to help! Do you have a GitHub repo set up?" }
-                    ],
-                    timestamp: new Date('2023-06-02T14:30:00').toISOString()
-                }
-            ];
-            savePosts(posts);
-        }
+        // Load initial posts from Firebase
+        loadPosts((loadedPosts) => {
+            posts = loadedPosts;
+            if (posts.length === 0) {
+                posts = [
+                    {
+                        id: 1,
+                        author: "CuriousCoder123",
+                        content: "Just finished my first React project! Any tips for optimizing performance?",
+                        likes: ["BraveDeveloper456", "CleverEngineer789"],
+                        comments: [
+                            { author: "FriendlyHacker234", content: "Great job! Have you tried using React.memo for component memoization?" },
+                            { author: "HappyProgrammer567", content: "Congratulations! Make sure to use the React DevTools for performance profiling." }
+                        ],
+                        timestamp: new Date('2023-06-01T10:00:00').toISOString()
+                    },
+                    {
+                        id: 2,
+                        author: "BraveEngineer890",
+                        content: "Looking for collaborators on an open-source Python project. Anyone interested?",
+                        likes: ["CuriousCoder123"],
+                        comments: [
+                            { author: "CleverDeveloper321", content: "Sounds interesting! What's the project about?" },
+                            { author: "FriendlyProgrammer654", content: "I'd love to help! Do you have a GitHub repo set up?" }
+                        ],
+                        timestamp: new Date('2023-06-02T14:30:00').toISOString()
+                    }
+                ];
+                savePosts(posts);
+            }
+            renderPosts();
+        });
 
         // Function to create a post element
         function createPostElement(post) {
@@ -428,8 +452,11 @@
             });
         }
 
-        // Initial render
-        renderPosts();
+        // Listen for changes in the Firebase database
+        database.ref('posts').on('value', (snapshot) => {
+            posts = snapshot.val() || [];
+            renderPosts();
+        });
 
         // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', (event) => {
