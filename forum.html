@@ -379,14 +379,21 @@
                         <i class="fas fa-reply"></i> Reply
                     </button>
                 </div>
-                <div class="nested-comments">
-                    ${comment.replies ? comment.replies.map(reply => createCommentElement(reply, postId, comment.id)).join('') : ''}
-                </div>
+                <div class="nested-comments"></div>
                 <form class="comment-form reply-form" style="display: none;" data-post-id="${postId}" data-parent-id="${comment.id}">
                     <input type="text" placeholder="Write a reply..." required>
                     <button type="submit">Send</button>
                 </form>
             `;
+
+            // Append nested comments
+            const nestedCommentsContainer = commentElement.querySelector('.nested-comments');
+            if (comment.replies && Array.isArray(comment.replies)) {
+                comment.replies.forEach(reply => {
+                    nestedCommentsContainer.appendChild(createCommentElement(reply, postId, comment.id));
+                });
+            }
+
             return commentElement;
         }
 
@@ -409,14 +416,21 @@
                         <i class="fas fa-comment"></i> Comment (${Array.isArray(post.comments) ? post.comments.length : 0})
                     </button>
                 </div>
-                <div class="comments">
-                    ${Array.isArray(post.comments) ? post.comments.map(comment => createCommentElement(comment, post.id)).join('') : ''}
-                </div>
+                <div class="comments"></div>
                 <form class="comment-form" data-post-id="${post.id}">
                     <input type="text" placeholder="Write a comment..." required>
                     <button type="submit">Send</button>
                 </form>
             `;
+
+            // Append comments
+            const commentsContainer = postElement.querySelector('.comments');
+            if (Array.isArray(post.comments)) {
+                post.comments.forEach(comment => {
+                    commentsContainer.appendChild(createCommentElement(comment, post.id));
+                });
+            }
+
             return postElement;
         }
 
@@ -533,7 +547,9 @@
                     savePosts(posts).then(() => {
                         renderPosts();
                         e.target.reset();
-                        e.target.style.display = 'none';
+                        if (parentId) {
+                            e.target.style.display = 'none';
+                        }
                     });
                 }
             }
