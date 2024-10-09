@@ -277,6 +277,10 @@
         // Function to save posts to Firebase
         function savePosts(posts) {
             console.log("Saving posts to Firebase:", posts);
+            if (!Array.isArray(posts)) {
+                console.error("Attempting to save non-array data:", posts);
+                posts = [];
+            }
             return database.ref('posts').set(posts)
                 .then(() => console.log("Posts saved successfully"))
                 .catch(error => console.error("Error saving posts:", error));
@@ -286,9 +290,17 @@
         function loadPosts(callback) {
             console.log("Loading posts...");
             database.ref('posts').once('value').then((snapshot) => {
-                const posts = snapshot.val() || [];
+                let posts = snapshot.val() || [];
                 console.log("Loaded posts:", posts);
                 if (Array.isArray(posts)) {
+                    posts = posts.map(post => ({
+                        id: post.id || Date.now(),
+                        author: post.author || 'Anonymous',
+                        content: post.content || '',
+                        likes: Array.isArray(post.likes) ? post.likes : [],
+                        comments: Array.isArray(post.comments) ? post.comments : [],
+                        timestamp: post.timestamp || new Date().toISOString()
+                    }));
                     callback(posts);
                 } else {
                     console.error("Loaded data is not an array:", posts);
@@ -346,15 +358,15 @@
                 </div>
                 <div class="post-content">${post.content || ''}</div>
                 <div class="post-actions">
-                    <button class="post-action like-btn ${(post.likes && post.likes.includes(username)) ? 'liked' : ''}" data-post-id="${post.id}">
-                        <i class="fas fa-thumbs-up"></i> Like (${post.likes ? post.likes.length : 0})
+                    <button class="post-action like-btn ${(post.likes && Array.isArray(post.likes) && post.likes.includes(username)) ? 'liked' : ''}" data-post-id="${post.id}">
+                        <i class="fas fa-thumbs-up"></i> Like (${post.likes && Array.isArray(post.likes) ? post.likes.length : 0})
                     </button>
                     <button class="post-action comment-btn" data-post-id="${post.id}">
-                        <i class="fas fa-comment"></i> Comment (${post.comments ? post.comments.length : 0})
+                        <i class="fas fa-comment"></i> Comment (${post.comments && Array.isArray(post.comments) ? post.comments.length : 0})
                     </button>
                 </div>
                 <div class="comments">
-                    ${post.comments ? post.comments.map(comment => `
+                    ${post.comments && Array.isArray(post.comments) ? post.comments.map(comment => `
                         <div class="comment">
                             <strong>${comment.author || 'Anonymous'}:</strong> ${comment.content || ''}
                         </div>
