@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ - DevConnect by Odin</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="img/Devconnect Favicon.png" type="image/x-icon" />
+    <meta name="description" content="Frequently Asked Questions about DevConnect - Your platform for developer connections and resources." />
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .faq-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .hero-content {
+            margin:  0 auto;
+            text-align: center;
+        }
+
+        .cta-button {
+            background-color: azure;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo" />
+            </a>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="forum.html">Forum</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/login.html" class="login-btn">Log In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center; color: white; padding: 4rem 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+            <div class="hero-content">
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about DevConnect and how to make the most of our platform.</p>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="faq-container">
+                <div class="faq-item">
+                    <h3 class="faq-question">What is DevConnect? <span class="faq-toggle">+</span></h3>
+                    <div class="faq-answer">
+                        <p>DevConnect is a platform designed to empower developers by providing a space to connect, learn, and innovate together. We offer resources, forums, and collaborative tools to help developers at all stages of their careers.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">How do I join DevConnect? <span class="faq-toggle">+</span></h3>
+                    <div class="faq-answer">
+                        <p>Joining DevConnect is easy! Simply click on the "Sign Up" button in the top right corner of our homepage. Fill out the registration form with your details, and you'll be part of our community in no time.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Is DevConnect free to use? <span class="faq-toggle">+</span></h3>
+                    <div class="faq-answer">
+                        <p>Yes, DevConnect offers a free tier with access to many features. We also have premium plans for those who want additional resources and benefits. Check our pricing page for more details.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">What kind of resources does DevConnect offer? <span class="faq-toggle">+</span></h3>
+                    <div class="faq-answer">
+                        <p>DevConnect provides a wide range of resources including tutorials, articles, video courses, coding challenges, and project ideas. We cover various programming languages, frameworks, and development concepts.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">How can I contribute to the DevConnect community? <span class="faq-toggle">+</span></h3>
+                    <div class="faq-answer">
+                        <p>There are many ways to contribute! You can share your knowledge in our forums, create tutorials, participate in code reviews, or even mentor other developers. Check out our "Get Involved" page for more information.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Is there a mobile app for DevConnect? <span class="faq-toggle">+</span></h3>
+                    <div class="faq-answer">
+                        <p>Currently, we don't have a mobile app, but our website is fully responsive and works great on mobile devices. We're considering developing a mobile app in the future based on community feedback.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Didn't find your answer?</h2>
+                <p>Our support team is here to help. Reach out to us for any questions or concerns.</p>
+                <a href="contact.html" class="cta-button">Contact Support</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <img style="padding-bottom: 20px;" src="img/Devconnect logo.png" alt="DevConnect Logo" width="200px" />
+                <p>Empowering developers to connect, learn, and innovate together.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="termsandconditions.html">Terms of Service</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for the latest updates and exclusive content.</p>
+                <form action="#" method="post">
+                    <input type="email" name="email" placeholder="Enter your email" required />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DevConnect by David Ege-Obetta. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Hamburger menu functionality
+            const hamburger = document.getElementById('hamburger-menu');
+            const navMenu = document.getElementById('nav-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // FAQ accordion functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const toggle = question.querySelector('.faq-toggle');
+
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    if (item.classList.contains('active')) {
+                        answer.style.display = 'block';
+                        toggle.textContent = '-';
+                    } else {
+                        answer.style.display = 'none';
+                        toggle.textContent = '+';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
