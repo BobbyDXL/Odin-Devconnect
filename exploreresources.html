@@ -28,9 +28,14 @@
         h1, h2 {
             color: var(--primary-color);
             text-align: center;
+            padding-top:  50px;
             margin-bottom: 2rem;
         }
         
+        h1 {
+            margin-bottom:  0px !important;
+        }
+
         .resource-category {
             margin-bottom: 3rem;
         }
@@ -70,6 +75,40 @@
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="img/Devconnect logo.png" alt="DevConnect Logo" />
+            </a>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="forum.html">Forum</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/login.html" class="login-btn">Log In</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Credits <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="https://unsplash.com" target="_blank">Unsplash - Images</a>
+                        <a href="https://unsplash.com/@anniespratt" target="_blank">Annie Spratt - Hero Image</a>
+                        <a href="https://unsplash.com/@yancymin" target="_blank">Yancy Min - Code Collaboration Image</a>
+                        <a href="https://unsplash.com/@goumbik" target="_blank">Lukas Blazek - Learning Resources Image</a>
+                        <a href="https://unsplash.com/@wocintechchat" target="_blank">Christina @ wocintechchat.com -
+                            Community
+                            Support Image</a>
+                        <a href="https://fontawesome.com" target="_blank">Font Awesome - Icons</a>
+                        <a href="https://fonts.google.com" target="_blank">Google Fonts - Typography</a>
+                        <a href="https://iconfinder.com" target="_blank">Iconfinder - Tech Stack Icons</a>
+                        <a href="https://iconscout.com" target="_blank">Iconscout - Tech Stack Icons</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
     <h1>Explore Developer Resources</h1>
 
     <div class="resource-category">
