@@ -488,14 +488,14 @@
             const target = e.target.closest('.post-action');
             if (!target) return;
 
-            const postId = parseInt(target.dataset.postId);
+            const postId = parseInt(target.closest('[data-post-id]').dataset.postId);
             const commentId = target.dataset.commentId;
             const post = posts.find(p => p.id === postId);
 
             if (target.classList.contains('like-btn')) {
                 if (commentId) {
                     // Like a comment
-                    const comment = findComment(post.comments, commentId);
+                    const comment = findComment(post.comments, parseInt(commentId));
                     if (comment) {
                         if (!Array.isArray(comment.likes)) comment.likes = [];
                         const likeIndex = comment.likes.indexOf(username);
@@ -555,7 +555,9 @@
             }
         });
 
+        // Update the findComment function to search through nested replies
         function findComment(comments, commentId) {
+            if (!Array.isArray(comments)) return null;
             for (let comment of comments) {
                 if (comment.id === commentId) return comment;
                 if (comment.replies) {
