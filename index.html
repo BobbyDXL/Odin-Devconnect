@@ -308,9 +308,11 @@
       <p>&copy; 2024 DevConnect by David Ege-Obetta. All rights reserved.</p>
     </div>
   </footer>
-  <script src="js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', (event) => {
+      // Hamburger menu functionality
       const hamburger = document.getElementById('hamburger-menu');
       const navMenu = document.getElementById('nav-menu');
 
@@ -318,7 +320,391 @@
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
       });
+
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      // GSAP animations
+      gsap.registerPlugin(ScrollTrigger);
+      
+      gsap.from('.hero-content', {duration: 1, opacity: 0, y: 50, stagger: 0.2});
+      
+      gsap.utils.toArray('.feature-card').forEach((card, index) => {
+        gsap.from(card, {
+          duration: 0.8,
+          opacity: 0,
+          y: 30,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 80%',
+          },
+          delay: index * 0.2
+        });
+      });
+
+    // Lazy Loading Images
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const lazyImage = entry.target;
+          lazyImage.src = lazyImage.dataset.src || lazyImage.src; // Use dataset.src if available, otherwise keep current src
+          lazyImage.removeAttribute('loading');
+          lazyImageObserver.unobserve(lazyImage);
+        }
+      });
     });
+
+    lazyImages.forEach(image => {
+      // Ensure the image has a data-src attribute
+      if (!image.dataset.src) {
+        image.dataset.src = image.src;
+      }
+      lazyImageObserver.observe(image);
+    });
+
+    // Immediately load the hero image if it exists
+    const heroImage = document.querySelector('.hero-image img');
+    if (heroImage) {
+      heroImage.src = heroImage.dataset.src || heroImage.src;
+      heroImage.removeAttribute('loading');
+    }
+
+    // Form Validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+      const emailInput = form.querySelector('input[type="email"]');
+      if (!emailInput.value.includes('@')) {
+        event.preventDefault();
+        alert('Please enter a valid email address');
+      }
+    });
+
+    // Scroll to Top Button
+    const scrollToTopBtn = document.createElement('button');
+    scrollToTopBtn.innerHTML = '↑';
+    scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
+    scrollToTopBtn.style.position = 'fixed';
+    scrollToTopBtn.style.bottom = '20px';
+    scrollToTopBtn.style.right = '20px';
+    scrollToTopBtn.style.display = 'none';
+    scrollToTopBtn.style.backgroundColor = '#4a90e2'; // Color from DevConnect favicon
+    scrollToTopBtn.style.color = 'white';
+    scrollToTopBtn.style.border = 'none';
+    scrollToTopBtn.style.borderRadius = '50%';
+    scrollToTopBtn.style.width = '40px';
+    scrollToTopBtn.style.height = '40px';
+    scrollToTopBtn.style.fontSize = '20px';
+    scrollToTopBtn.style.cursor = 'pointer';
+    document.body.appendChild(scrollToTopBtn);
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.style.display = 'block';
+      } else {
+        scrollToTopBtn.style.display = 'none';
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Dark Mode Toggle
+    const darkModeToggle = document.createElement('button');
+    darkModeToggle.innerHTML = '🌙';
+    darkModeToggle.setAttribute('aria-label', 'Toggle dark mode');
+    darkModeToggle.style.position = 'fixed';
+    darkModeToggle.style.top = '20px';
+    darkModeToggle.style.right = '20px';
+    darkModeToggle.style.backgroundColor = '#4a90e2';
+    darkModeToggle.style.color = 'white';
+    darkModeToggle.style.border = 'none';
+    darkModeToggle.style.borderRadius = '50%';
+    darkModeToggle.style.width = '40px';
+    darkModeToggle.style.height = '40px';
+    darkModeToggle.style.fontSize = '20px';
+    darkModeToggle.style.cursor = 'pointer';
+    document.body.appendChild(darkModeToggle);
+
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      darkModeToggle.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    });
+
+    // Typing Animation
+    const typingElement = document.querySelector('.hero-content h1');
+    const text = typingElement.textContent;
+    typingElement.textContent = '';
+    let i = 0;
+
+    function typeWriter() {
+      if (i < text.length) {
+        typingElement.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+
+    typeWriter();
+
+    // Parallax Scrolling
+    window.addEventListener('scroll', () => {
+      const parallaxElements = document.querySelectorAll('.parallax');
+      parallaxElements.forEach(element => {
+        const speed = element.dataset.speed;
+        element.style.transform = `translateY(${window.pageYOffset * speed}px)`;
+      });
+    });
+
+    // Smooth Anchor Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Image Hover Effect
+    const projectImages = document.querySelectorAll('.project-card img');
+    projectImages.forEach(img => {
+      img.addEventListener('mouseover', () => {
+        img.style.transform = 'scale(1.1)';
+        img.style.transition = 'transform 0.3s ease';
+      });
+      img.addEventListener('mouseout', () => {
+        img.style.transform = 'scale(1)';
+      });
+    });
+
+    // Animated Counter
+    function animateCounter(el) {
+      const target = parseInt(el.getAttribute('data-target'));
+      let count = 0;
+      const increment = target / 200;
+      const updateCount = () => {
+        count += increment;
+        el.innerText = Math.ceil(count);
+        if (count < target) {
+          requestAnimationFrame(updateCount);
+        } else {
+          el.innerText = target;
+        }
+      };
+      updateCount();
+    }
+
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      animateCounter(counter);
+    });
+
+    // Scroll-triggered animations
+    gsap.utils.toArray('.animate-on-scroll').forEach(element => {
+      gsap.from(element, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+    });
+
+    // Tilt effect on feature cards
+    VanillaTilt.init(document.querySelectorAll('.feature-card'), {
+      max: 25,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.5,
+    });
+
+    // Typewriter effect for section headings
+    const typewriterElements = document.querySelectorAll('.typewriter');
+    typewriterElements.forEach(element => {
+      new Typewriter(element, {
+        strings: [element.textContent],
+        autoStart: true,
+        loop: true,
+        delay: 50
+      });
+    });
+
+    // Confetti effect on CTA button click
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      });
+    });
+
+    // Animated background gradient
+    const gradientBg = document.createElement('div');
+    gradientBg.classList.add('animated-bg');
+    document.body.appendChild(gradientBg);
+
+    gsap.to(gradientBg, {
+      background: 'linear-gradient(270deg, #ff6b6b, #4ecdc4, #45b7d1)',
+      duration: 10,
+      ease: 'none',
+      repeat: -1,
+      yoyo: true
+    });
+
+    // Intersection Observer for lazy loading
+    const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll('.lazy-load').forEach(element => {
+      lazyLoadObserver.observe(element);
+    });
+
+    // Add custom cursor
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Animate numbers on scroll
+    const animateValue = (obj, start, end, duration) => {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    const numberElements = document.querySelectorAll('.animate-number');
+    const observerOptions = {
+      threshold: 0.5
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = entry.target;
+          const end = parseInt(target.getAttribute('data-target'));
+          animateValue(target, 0, end, 2000);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    numberElements.forEach(el => observer.observe(el));
+
+    // New: Sticky Header
+    const header = document.querySelector('header');
+    const sticky = header.offsetTop;
+
+    window.onscroll = function() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    };
+
+    // New: Accordion for FAQ section
+    const accordions = document.querySelectorAll('.accordion');
+    accordions.forEach(accordion => {
+      accordion.addEventListener('click', () => {
+        accordion.classList.toggle('active');
+        const panel = accordion.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    });
+
+    // New: Infinite scroll for blog posts or projects
+    let page = 1;
+    const loadMoreButton = document.querySelector('#load-more');
+    const contentContainer = document.querySelector('#content-container');
+
+    loadMoreButton.addEventListener('click', () => {
+      fetch(`/api/content?page=${page}`)
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(item => {
+            const element = document.createElement('div');
+            element.innerHTML = `<h3>${item.title}</h3><p>${item.excerpt}</p>`;
+            contentContainer.appendChild(element);
+          });
+          page++;
+          if (page > 5) { // Assuming we have 5 pages of content
+            loadMoreButton.style.display = 'none';
+          }
+        });
+    });
+
+    // New: Search functionality
+    const searchInput = document.querySelector('#search-input');
+    const searchResults = document.querySelector('#search-results');
+
+    searchInput.addEventListener('input', debounce(() => {
+      const query = searchInput.value;
+      if (query.length > 2) {
+        fetch(`/api/search?q=${query}`)
+          .then(response => response.json())
+          .then(results => {
+            searchResults.innerHTML = '';
+            results.forEach(result => {
+              const element = document.createElement('div');
+              element.innerHTML = `<a href="${result.url}">${result.title}</a>`;
+              searchResults.appendChild(element);
+            });
+          });
+      } else {
+        searchResults.innerHTML = '';
+      }
+    }, 300));
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+  });
   </script>
 </body>
 
