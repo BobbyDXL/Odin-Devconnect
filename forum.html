@@ -358,15 +358,15 @@
                 </div>
                 <div class="post-content">${post.content || ''}</div>
                 <div class="post-actions">
-                    <button class="post-action like-btn ${(post.likes && Array.isArray(post.likes) && post.likes.includes(username)) ? 'liked' : ''}" data-post-id="${post.id}">
-                        <i class="fas fa-thumbs-up"></i> Like (${post.likes && Array.isArray(post.likes) ? post.likes.length : 0})
+                    <button class="post-action like-btn ${(Array.isArray(post.likes) && post.likes.includes(username)) ? 'liked' : ''}" data-post-id="${post.id}">
+                        <i class="fas fa-thumbs-up"></i> Like (${Array.isArray(post.likes) ? post.likes.length : 0})
                     </button>
                     <button class="post-action comment-btn" data-post-id="${post.id}">
-                        <i class="fas fa-comment"></i> Comment (${post.comments && Array.isArray(post.comments) ? post.comments.length : 0})
+                        <i class="fas fa-comment"></i> Comment (${Array.isArray(post.comments) ? post.comments.length : 0})
                     </button>
                 </div>
                 <div class="comments">
-                    ${post.comments && Array.isArray(post.comments) ? post.comments.map(comment => `
+                    ${Array.isArray(post.comments) ? post.comments.map(comment => `
                         <div class="comment">
                             <strong>${comment.author || 'Anonymous'}:</strong> ${comment.content || ''}
                         </div>
@@ -436,14 +436,20 @@
 
             if (e.target.closest('.like-btn')) {
                 if (post) {
+                    if (!Array.isArray(post.likes)) {
+                        post.likes = [];
+                    }
                     const likeIndex = post.likes.indexOf(username);
                     if (likeIndex === -1) {
                         post.likes.push(username);
                     } else {
                         post.likes.splice(likeIndex, 1);
                     }
-                    savePosts(posts);
-                    renderPosts();
+                    savePosts(posts).then(() => {
+                        renderPosts();
+                    }).catch(error => {
+                        console.error("Error saving likes:", error);
+                    });
                 }
             }
         });
