@@ -8,6 +8,7 @@
     <link rel="icon" href="img/Devconnect Favicon.png" type="image/x-icon" />
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .forum-container {
             max-width: 1200px;
@@ -79,8 +80,17 @@
             color: #555;
             cursor: pointer;
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
         }
         .post-action:hover {
+            color: #4a90e2;
+        }
+        .post-action i {
+            margin-right: 5px;
+        }
+        .post-action.liked {
             color: #4a90e2;
         }
         .comments {
@@ -93,6 +103,17 @@
             padding: 10px;
             background-color: #f9f9f9;
             border-radius: 4px;
+        }
+        .comment-actions {
+            margin-top: 5px;
+        }
+        .comment-form {
+            margin-top: 10px;
+        }
+        .nested-comments {
+            margin-left: 20px;
+            border-left: 2px solid #e0e0e0;
+            padding-left: 10px;
         }
         .new-post-form {
             background-color: #fff;
@@ -345,7 +366,30 @@
             renderPosts();
         });
 
-        // Function to create a post element
+        function createCommentElement(comment, postId, parentCommentId = null) {
+            const commentElement = document.createElement('div');
+            commentElement.className = 'comment';
+            commentElement.innerHTML = `
+                <strong>${comment.author || 'Anonymous'}:</strong> ${comment.content || ''}
+                <div class="comment-actions">
+                    <button class="post-action like-btn ${(comment.likes && comment.likes.includes(username)) ? 'liked' : ''}" data-post-id="${postId}" data-comment-id="${comment.id}">
+                        <i class="fas fa-thumbs-up"></i> Like (${comment.likes ? comment.likes.length : 0})
+                    </button>
+                    <button class="post-action reply-btn" data-post-id="${postId}" data-comment-id="${comment.id}">
+                        <i class="fas fa-reply"></i> Reply
+                    </button>
+                </div>
+                <div class="nested-comments">
+                    ${comment.replies ? comment.replies.map(reply => createCommentElement(reply, postId, comment.id)).join('') : ''}
+                </div>
+                <form class="comment-form reply-form" style="display: none;" data-post-id="${postId}" data-parent-id="${comment.id}">
+                    <input type="text" placeholder="Write a reply..." required>
+                    <button type="submit">Send</button>
+                </form>
+            `;
+            return commentElement;
+        }
+
         function createPostElement(post) {
             const postElement = document.createElement('div');
             postElement.className = 'post';
@@ -366,11 +410,7 @@
                     </button>
                 </div>
                 <div class="comments">
-                    ${Array.isArray(post.comments) ? post.comments.map(comment => `
-                        <div class="comment">
-                            <strong>${comment.author || 'Anonymous'}:</strong> ${comment.content || ''}
-                        </div>
-                    `).join('') : ''}
+                    ${Array.isArray(post.comments) ? post.comments.map(comment => createCommentElement(comment, post.id)).join('') : ''}
                 </div>
                 <form class="comment-form" data-post-id="${post.id}">
                     <input type="text" placeholder="Write a comment..." required>
@@ -429,52 +469,86 @@
             }
         });
 
-        // Event delegation for post actions
+        // Update the event listener for post actions
         document.getElementById('posts-container').addEventListener('click', function(e) {
-            const postId = parseInt(e.target.closest('[data-post-id]')?.dataset.postId);
+            const target = e.target.closest('.post-action');
+            if (!target) return;
+
+            const postId = parseInt(target.dataset.postId);
+            const commentId = target.dataset.commentId;
             const post = posts.find(p => p.id === postId);
 
-            if (e.target.closest('.like-btn')) {
-                if (post) {
-                    if (!Array.isArray(post.likes)) {
-                        post.likes = [];
+            if (target.classList.contains('like-btn')) {
+                if (commentId) {
+                    // Like a comment
+                    const comment = findComment(post.comments, commentId);
+                    if (comment) {
+                        if (!Array.isArray(comment.likes)) comment.likes = [];
+                        const likeIndex = comment.likes.indexOf(username);
+                        if (likeIndex === -1) comment.likes.push(username);
+                        else comment.likes.splice(likeIndex, 1);
                     }
+                } else {
+                    // Like a post
+                    if (!Array.isArray(post.likes)) post.likes = [];
                     const likeIndex = post.likes.indexOf(username);
-                    if (likeIndex === -1) {
-                        post.likes.push(username);
-                    } else {
-                        post.likes.splice(likeIndex, 1);
-                    }
-                    savePosts(posts).then(() => {
-                        renderPosts();
-                    }).catch(error => {
-                        console.error("Error saving likes:", error);
-                    });
+                    if (likeIndex === -1) post.likes.push(username);
+                    else post.likes.splice(likeIndex, 1);
                 }
+                savePosts(posts).then(() => renderPosts());
+            } else if (target.classList.contains('reply-btn')) {
+                const replyForm = target.closest('.comment').querySelector('.reply-form');
+                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
             }
         });
 
-        // Event delegation for comment forms
+        // Update the event listener for comment forms
         document.getElementById('posts-container').addEventListener('submit', function(e) {
             if (e.target.classList.contains('comment-form')) {
                 e.preventDefault();
                 const postId = parseInt(e.target.dataset.postId);
+                const parentId = e.target.dataset.parentId;
                 const post = posts.find(p => p.id === postId);
                 const commentContent = e.target.querySelector('input').value;
                 if (post && commentContent.trim()) {
-                    if (!Array.isArray(post.comments)) {
-                        post.comments = [];
+                    const newComment = {
+                        id: Date.now(),
+                        author: username,
+                        content: commentContent,
+                        likes: [],
+                        replies: []
+                    };
+                    if (parentId) {
+                        // This is a reply to a comment
+                        const parentComment = findComment(post.comments, parseInt(parentId));
+                        if (parentComment) {
+                            if (!Array.isArray(parentComment.replies)) parentComment.replies = [];
+                            parentComment.replies.push(newComment);
+                        }
+                    } else {
+                        // This is a top-level comment
+                        if (!Array.isArray(post.comments)) post.comments = [];
+                        post.comments.push(newComment);
                     }
-                    post.comments.push({ author: username, content: commentContent });
                     savePosts(posts).then(() => {
                         renderPosts();
                         e.target.reset();
-                    }).catch(error => {
-                        console.error("Error saving comment:", error);
+                        e.target.style.display = 'none';
                     });
                 }
             }
         });
+
+        function findComment(comments, commentId) {
+            for (let comment of comments) {
+                if (comment.id === commentId) return comment;
+                if (comment.replies) {
+                    const found = findComment(comment.replies, commentId);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
 
         // Search functionality
         document.querySelector('.forum-search button').addEventListener('click', function() {
