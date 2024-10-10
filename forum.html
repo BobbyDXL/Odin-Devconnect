@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,21 +16,25 @@
             margin: 0 auto;
             padding: 20px;
         }
+
         .forum-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
+
         .forum-search {
             display: flex;
             align-items: center;
         }
+
         .forum-search input {
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px 0 0 4px;
         }
+
         .forum-search button {
             padding: 10px 15px;
             background-color: #4a90e2;
@@ -38,42 +43,51 @@
             border-radius: 0 4px 4px 0;
             cursor: pointer;
         }
+
         .post {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             padding: 20px;
             transition: box-shadow 0.3s ease;
         }
+
         .post:hover {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
         .post-header {
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
+
         .post-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             margin-right: 10px;
         }
+
         .post-author {
             font-weight: bold;
         }
+
         .post-meta {
             font-size: 0.8em;
             color: #777;
         }
+
         .post-content {
             margin-bottom: 15px;
         }
+
         .post-actions {
             display: flex;
             justify-content: space-between;
         }
+
         .post-action {
             background: none;
             border: none;
@@ -84,44 +98,54 @@
             align-items: center;
             margin-right: 15px;
         }
+
         .post-action:hover {
             color: #4a90e2;
         }
+
         .post-action i {
             margin-right: 5px;
         }
+
         .post-action.liked {
             color: #4a90e2;
         }
+
         .comments {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid #eee;
         }
+
         .comment {
             margin-bottom: 10px;
             padding: 10px;
             background-color: #f9f9f9;
             border-radius: 4px;
         }
+
         .comment-actions {
             margin-top: 5px;
         }
+
         .comment-form {
             margin-top: 10px;
         }
+
         .nested-comments {
             margin-left: 20px;
             border-left: 2px solid #e0e0e0;
             padding-left: 10px;
         }
+
         .new-post-form {
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 20px;
         }
+
         .new-post-form textarea {
             width: 100%;
             height: 100px;
@@ -131,6 +155,7 @@
             border-radius: 4px;
             resize: vertical;
         }
+
         .new-post-form button {
             background-color: #4a90e2;
             color: #fff;
@@ -140,19 +165,23 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         .new-post-form button:hover {
             background-color: #3a7bc8;
         }
+
         .comment-form {
             display: flex;
             margin-top: 10px;
         }
+
         .comment-form input {
             flex-grow: 1;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px 0 0 4px;
         }
+
         .comment-form button {
             padding: 10px 15px;
             background-color: #4a90e2;
@@ -161,11 +190,13 @@
             border-radius: 0 4px 4px 0;
             cursor: pointer;
         }
+
         .pagination {
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
+
         .pagination button {
             margin: 0 5px;
             padding: 5px 10px;
@@ -174,12 +205,19 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         .pagination button.active {
             background-color: #4a90e2;
             color: #fff;
         }
+
+        .depth-0 { margin-left: 0; }
+        .depth-1 { margin-left: 20px; }
+        .depth-2 { margin-left: 40px; }
+        .depth-3 { margin-left: 60px; }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -265,14 +303,14 @@
     <script>
         // Initialize Firebase (replace with your own config)
         const firebaseConfig = {
-                apiKey: "AIzaSyAgcPHAAOq3SieD4NqCsH-18_aUuoub0_k",
-                authDomain: "devconnect-by-odin.firebaseapp.com",
-                projectId: "devconnect-by-odin",
-                storageBucket: "devconnect-by-odin.appspot.com",
-                messagingSenderId: "120220982267",
-                appId: "1:120220982267:web:8d16a70d30383fc4c6895e",
-                measurementId: "G-ML0JGNSH0C"
-            };
+            apiKey: "AIzaSyAgcPHAAOq3SieD4NqCsH-18_aUuoub0_k",
+            authDomain: "devconnect-by-odin.firebaseapp.com",
+            projectId: "devconnect-by-odin",
+            storageBucket: "devconnect-by-odin.appspot.com",
+            messagingSenderId: "120220982267",
+            appId: "1:120220982267:web:8d16a70d30383fc4c6895e",
+            measurementId: "G-ML0JGNSH0C"
+        };
         firebase.initializeApp(firebaseConfig);
 
         // Get a reference to the database service
@@ -366,9 +404,9 @@
             renderPosts();
         });
 
-        function createCommentElement(comment, postId, parentCommentId = null) {
+        function createCommentElement(comment, postId, depth = 0) {
             const commentElement = document.createElement('div');
-            commentElement.className = 'comment';
+            commentElement.className = `comment depth-${depth}`;
             commentElement.innerHTML = `
                 <strong>${comment.author || 'Anonymous'}:</strong> ${comment.content || ''}
                 <div class="comment-actions">
@@ -379,18 +417,18 @@
                         <i class="fas fa-reply"></i> Reply
                     </button>
                 </div>
-                <div class="nested-comments"></div>
                 <form class="comment-form reply-form" style="display: none;" data-post-id="${postId}" data-parent-id="${comment.id}">
                     <input type="text" placeholder="Write a reply..." required>
                     <button type="submit">Send</button>
                 </form>
+                <div class="nested-comments"></div>
             `;
 
             // Append nested comments
             const nestedCommentsContainer = commentElement.querySelector('.nested-comments');
             if (comment.replies && Array.isArray(comment.replies)) {
                 comment.replies.forEach(reply => {
-                    nestedCommentsContainer.appendChild(createCommentElement(reply, postId, comment.id));
+                    nestedCommentsContainer.appendChild(createCommentElement(reply, postId, depth + 1));
                 });
             }
 
@@ -459,7 +497,7 @@
         }
 
         // Event listener for new post form
-        document.querySelector('.new-post-form').addEventListener('submit', function(e) {
+        document.querySelector('.new-post-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const content = this.querySelector('textarea').value;
             if (content.trim()) {
@@ -484,7 +522,7 @@
         });
 
         // Update the event listener for post actions
-        document.getElementById('posts-container').addEventListener('click', function(e) {
+        document.getElementById('posts-container').addEventListener('click', function (e) {
             const target = e.target.closest('.post-action');
             if (!target) return;
 
@@ -517,7 +555,7 @@
         });
 
         // Update the event listener for comment forms
-        document.getElementById('posts-container').addEventListener('submit', function(e) {
+        document.getElementById('posts-container').addEventListener('submit', function (e) {
             if (e.target.classList.contains('comment-form')) {
                 e.preventDefault();
                 const postId = parseInt(e.target.dataset.postId);
@@ -534,11 +572,7 @@
                     };
                     if (parentId) {
                         // This is a reply to a comment
-                        const parentComment = findComment(post.comments, parseInt(parentId));
-                        if (parentComment) {
-                            if (!Array.isArray(parentComment.replies)) parentComment.replies = [];
-                            parentComment.replies.push(newComment);
-                        }
+                        addReplyToComment(post.comments, parseInt(parentId), newComment);
                     } else {
                         // This is a top-level comment
                         if (!Array.isArray(post.comments)) post.comments = [];
@@ -555,6 +589,22 @@
             }
         });
 
+        function addReplyToComment(comments, parentId, newReply) {
+            for (let comment of comments) {
+                if (comment.id === parentId) {
+                    if (!Array.isArray(comment.replies)) comment.replies = [];
+                    comment.replies.push(newReply);
+                    return true;
+                }
+                if (comment.replies && Array.isArray(comment.replies)) {
+                    if (addReplyToComment(comment.replies, parentId, newReply)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         // Update the findComment function to search through nested replies
         function findComment(comments, commentId) {
             if (!Array.isArray(comments)) return null;
@@ -569,10 +619,10 @@
         }
 
         // Search functionality
-        document.querySelector('.forum-search button').addEventListener('click', function() {
+        document.querySelector('.forum-search button').addEventListener('click', function () {
             const searchTerm = document.querySelector('.forum-search input').value.toLowerCase();
-            const filteredPosts = posts.filter(post => 
-                post.content.toLowerCase().includes(searchTerm) || 
+            const filteredPosts = posts.filter(post =>
+                post.content.toLowerCase().includes(searchTerm) ||
                 post.author.toLowerCase().includes(searchTerm)
             );
             renderFilteredPosts(filteredPosts);
@@ -605,4 +655,5 @@
         });
     </script>
 </body>
+
 </html>
