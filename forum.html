@@ -338,7 +338,7 @@
             apiKey: "AIzaSyAgcPHAAOq3SieD4NqCsH-18_aUuoub0_k",
             authDomain: "devconnect-by-odin.firebaseapp.com",
             projectId: "devconnect-by-odin",
-            storageBucket: "your-project-id.appspot.com",
+            storageBucket: "devconnect-by-odin.appspot.com", // Make sure this line is present
             messagingSenderId: "120220982267",
             appId: "1:120220982267:web:8d16a70d30383fc4c6895e",
             measurementId: "G-ML0JGNSH0C"
@@ -532,13 +532,13 @@
         }
 
         // Event listener for new post form
-        document.querySelector('.new-post-form').addEventListener('submit', function (e) {
+        document.querySelector('.new-post-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const content = this.querySelector('textarea').value;
             if (content.trim() || currentUpload) {
                 if (currentUpload && currentUpload.file) {
                     // Upload file to Firebase Storage
-                    const storageRef = firebase.storage().ref('uploads/' + currentUpload.file.name);
+                    const storageRef = storage.ref('uploads/' + currentUpload.file.name);
                     const uploadTask = storageRef.put(currentUpload.file);
                     
                     uploadTask.on('state_changed', 
@@ -762,22 +762,28 @@
             e.preventDefault();
             const content = this.querySelector('textarea').value;
             if (content.trim() || currentUpload) {
-                const newPost = {
-                    id: Date.now(),
-                    author: username,
-                    content: content,
-                    likes: [],
-                    comments: [],
-                    timestamp: new Date().toISOString(),
-                    upload: currentUpload
-                };
-                posts.unshift(newPost);
-                savePosts(posts).then(() => {
-                    renderPosts();
-                    this.reset();
-                    currentUpload = null;
-                    updatePreview();
-                });
+                if (currentUpload && currentUpload.file) {
+                    // Upload file to Firebase Storage
+                    const storageRef = storage.ref('uploads/' + currentUpload.file.name);
+                    const uploadTask = storageRef.put(currentUpload.file);
+                    
+                    uploadTask.on('state_changed', 
+                        (snapshot) => {
+                            // You can add a progress indicator here if you want
+                        }, 
+                        (error) => {
+                            console.error("Upload failed:", error);
+                        }, 
+                        () => {
+                            // Upload completed successfully, now we can get the download URL
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                createNewPost(content, { type: currentUpload.type, url: downloadURL });
+                            });
+                        }
+                    );
+                } else {
+                    createNewPost(content, currentUpload);
+                }
             }
         });
 
@@ -830,6 +836,7 @@
             return postElement;
         }
     </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 </body>
 
 </html>
