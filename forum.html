@@ -7,9 +7,8 @@
     <title>DevConnect Forum</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="img/Devconnect Favicon.png" type="image/x-icon" />
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         .forum-container {
             max-width: 1200px;
@@ -211,33 +210,64 @@
             color: #fff;
         }
 
-        .depth-0 { margin-left: 0; }
-        .depth-1 { margin-left: 20px; }
-        .depth-2 { margin-left: 40px; }
-        .depth-3 { margin-left: 60px; }
+        .depth-0 {
+            margin-left: 0;
+        }
+
+        .depth-1 {
+            margin-left: 20px;
+        }
+
+        .depth-2 {
+            margin-left: 40px;
+        }
+
+        .depth-3 {
+            margin-left: 60px;
+        }
 
         .upload-options {
             display: flex;
             gap: 10px;
             margin-top: 10px;
         }
-        .upload-btn, .link-btn {
+
+        .upload-btn,
+        .link-btn {
             background-color: #f0f0f0;
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
         }
-        .upload-btn:hover, .link-btn:hover {
+
+        .upload-btn:hover,
+        .link-btn:hover {
             background-color: #e0e0e0;
         }
+
         #preview-container {
             margin-top: 10px;
         }
-        #preview-container img, #preview-container video {
+
+        #preview-container img,
+        #preview-container video {
             max-width: 100%;
             max-height: 300px;
             object-fit: contain;
+        }
+
+        .toggle-replies {
+            background: none;
+            border: none;
+            color: #4a90e2;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .toggle-replies:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -459,9 +489,20 @@
                 </form>
             `;
 
-            if (comment.replies && Array.isArray(comment.replies)) {
+            if (comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0) {
                 const nestedComments = document.createElement('div');
                 nestedComments.className = 'nested-comments';
+                if (depth >= 1) {
+                    nestedComments.style.display = 'none';
+                    const toggleButton = document.createElement('button');
+                    toggleButton.className = 'toggle-replies';
+                    toggleButton.textContent = 'Show replies';
+                    toggleButton.onclick = () => {
+                        nestedComments.style.display = nestedComments.style.display === 'none' ? 'block' : 'none';
+                        toggleButton.textContent = nestedComments.style.display === 'none' ? 'Show replies' : 'Hide replies';
+                    };
+                    commentElement.appendChild(toggleButton);
+                }
                 comment.replies.forEach(reply => {
                     nestedComments.appendChild(createCommentElement(reply, postId, depth + 1));
                 });
@@ -533,7 +574,7 @@
         }
 
         // Event listener for new post form
-        document.querySelector('.new-post-form').addEventListener('submit', function(e) {
+        document.querySelector('.new-post-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const content = this.querySelector('textarea').value;
             if (content.trim() || currentUpload) {
@@ -541,14 +582,14 @@
                     // Upload file to Firebase Storage
                     const storageRef = storage.ref('uploads/' + currentUpload.file.name);
                     const uploadTask = storageRef.put(currentUpload.file);
-                    
-                    uploadTask.on('state_changed', 
+
+                    uploadTask.on('state_changed',
                         (snapshot) => {
                             // You can add a progress indicator here if you want
-                        }, 
+                        },
                         (error) => {
                             console.error("Upload failed:", error);
-                        }, 
+                        },
                         () => {
                             // Upload completed successfully, now we can get the download URL
                             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -724,7 +765,7 @@
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     currentUpload = {
                         type: file.type.startsWith('image') ? 'image' : 'video',
                         file: file,
@@ -759,7 +800,7 @@
         }
 
         // Update the new post form submission
-        document.querySelector('.new-post-form').addEventListener('submit', function(e) {
+        document.querySelector('.new-post-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const content = this.querySelector('textarea').value;
             if (content.trim() || currentUpload) {
@@ -767,14 +808,14 @@
                     // Upload file to Firebase Storage
                     const storageRef = storage.ref('uploads/' + currentUpload.file.name);
                     const uploadTask = storageRef.put(currentUpload.file);
-                    
-                    uploadTask.on('state_changed', 
+
+                    uploadTask.on('state_changed',
                         (snapshot) => {
                             // You can add a progress indicator here if you want
-                        }, 
+                        },
                         (error) => {
                             console.error("Upload failed:", error);
-                        }, 
+                        },
                         () => {
                             // Upload completed successfully, now we can get the download URL
                             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -836,6 +877,119 @@
 
             return postElement;
         }
+
+        function generateDummyPosts() {
+            const dummyPosts = [
+                {
+                    id: Date.now() - 1000000,
+                    author: "CuriousDev42",
+                    content: "What's the best way to optimize React performance in a large-scale application?",
+                    likes: generateRandomLikes(50, 200),
+                    comments: [
+                        {
+                            id: Date.now() - 999000,
+                            author: "OptimizationGuru",
+                            content: "Use React.memo for functional components and shouldComponentUpdate for class components to prevent unnecessary re-renders.",
+                            likes: generateRandomLikes(10, 50),
+                            replies: [
+                                {
+                                    id: Date.now() - 998000,
+                                    author: "ReactNewbie",
+                                    content: "Can you explain how React.memo works?",
+                                    likes: generateRandomLikes(5, 20),
+                                }
+                            ]
+                        },
+                        {
+                            id: Date.now() - 997000,
+                            author: "PerformanceWizard",
+                            content: "Implement code-splitting using React.lazy and Suspense to load components only when needed.",
+                            likes: generateRandomLikes(15, 60),
+                        }
+                    ],
+                    timestamp: new Date(Date.now() - 1000000).toISOString()
+                },
+                {
+                    id: Date.now() - 2000000,
+                    author: "AIEnthusiast",
+                    content: "How can we ensure ethical AI development as the technology rapidly advances?",
+                    likes: generateRandomLikes(100, 500),
+                    comments: [
+                        {
+                            id: Date.now() - 1999000,
+                            author: "EthicsExpert",
+                            content: "We need robust regulatory frameworks and continuous ethical audits of AI systems.",
+                            likes: generateRandomLikes(30, 100),
+                            replies: [
+                                {
+                                    id: Date.now() - 1998000,
+                                    author: "TechSkeptic",
+                                    content: "But who will regulate the regulators?",
+                                    likes: generateRandomLikes(20, 50),
+                                }
+                            ]
+                        },
+                        {
+                            id: Date.now() - 1997000,
+                            author: "AIResearcher",
+                            content: "Transparency in AI decision-making processes is crucial. We should strive for explainable AI.",
+                            likes: generateRandomLikes(40, 120),
+                        }
+                    ],
+                    timestamp: new Date(Date.now() - 2000000).toISOString()
+                },
+                {
+                    id: Date.now() - 3000000,
+                    author: "ClimateActivist",
+                    content: "What are some innovative technologies being developed to combat climate change?",
+                    likes: generateRandomLikes(200, 1000),
+                    comments: [
+                        {
+                            id: Date.now() - 2999000,
+                            author: "GreenTechExpert",
+                            content: "Carbon capture and storage technologies are showing promise in reducing atmospheric CO2 levels.",
+                            likes: generateRandomLikes(50, 150),
+                            replies: [
+                                {
+                                    id: Date.now() - 2998000,
+                                    author: "SkepticalScientist",
+                                    content: "But what about the energy requirements for these technologies?",
+                                    likes: generateRandomLikes(30, 80),
+                                }
+                            ]
+                        },
+                        {
+                            id: Date.now() - 2997000,
+                            author: "SolarEnthusiast",
+                            content: "Advancements in solar panel efficiency and energy storage are making renewable energy more viable than ever.",
+                            likes: generateRandomLikes(60, 180),
+                        }
+                    ],
+                    timestamp: new Date(Date.now() - 3000000).toISOString()
+                }
+            ];
+
+            return dummyPosts;
+        }
+
+        function generateRandomLikes(min, max) {
+            const count = Math.floor(Math.random() * (max - min + 1)) + min;
+            const likes = [];
+            for (let i = 0; i < count; i++) {
+                likes.push(`User${Math.floor(Math.random() * 1000)}`);
+            }
+            return likes;
+        }
+
+        // Add this to your existing code where you load posts
+        loadPosts((loadedPosts) => {
+            posts = loadedPosts;
+            if (posts.length === 0) {
+                posts = generateDummyPosts();
+                savePosts(posts);
+            }
+            renderPosts();
+        });
     </script>
 </body>
 
