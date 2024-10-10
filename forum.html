@@ -215,6 +215,30 @@
         .depth-1 { margin-left: 20px; }
         .depth-2 { margin-left: 40px; }
         .depth-3 { margin-left: 60px; }
+
+        .upload-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .upload-btn, .link-btn {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-btn:hover, .link-btn:hover {
+            background-color: #e0e0e0;
+        }
+        #preview-container {
+            margin-top: 10px;
+        }
+        #preview-container img, #preview-container video {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+        }
     </style>
 </head>
 
@@ -250,6 +274,14 @@
 
         <form class="new-post-form">
             <textarea placeholder="What's on your mind?"></textarea>
+            <div class="upload-options">
+                <label for="image-upload" class="upload-btn"><i class="fas fa-image"></i> Image</label>
+                <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                <label for="video-upload" class="upload-btn"><i class="fas fa-video"></i> Video</label>
+                <input type="file" id="video-upload" accept="video/*" style="display: none;">
+                <button type="button" class="link-btn"><i class="fas fa-link"></i> Link</button>
+            </div>
+            <div id="preview-container"></div>
             <button type="submit">Post</button>
         </form>
 
@@ -315,6 +347,9 @@
 
         // Get a reference to the database service
         const database = firebase.database();
+
+        // Initialize Firebase Storage
+        const storage = firebase.storage();
 
         // Function to generate a random username
         function generateRandomUsername() {
@@ -653,6 +688,133 @@
                 navMenu.classList.toggle('active');
             });
         });
+
+        let currentUpload = null;
+
+        document.getElementById('image-upload').addEventListener('change', handleFileUpload);
+        document.getElementById('video-upload').addEventListener('change', handleFileUpload);
+        document.querySelector('.link-btn').addEventListener('click', insertLink);
+
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const storageRef = storage.ref('uploads/' + file.name);
+                const uploadTask = storageRef.put(file);
+
+                uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        // Handle progress
+                    }, 
+                    (error) => {
+                        console.error("Upload failed:", error);
+                    }, 
+                    () => {
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            currentUpload = {
+                                type: file.type.startsWith('image') ? 'image' : 'video',
+                                url: downloadURL
+                            };
+                            updatePreview();
+                        });
+                    }
+                );
+            }
+        }
+
+        function insertLink() {
+            const url = prompt("Enter the URL:");
+            if (url) {
+                currentUpload = { type: 'link', url: url };
+                updatePreview();
+            }
+        }
+
+        function updatePreview() {
+            const previewContainer = document.getElementById('preview-container');
+            previewContainer.innerHTML = '';
+            if (currentUpload) {
+                if (currentUpload.type === 'image') {
+                    previewContainer.innerHTML = `<img src="${currentUpload.url}" alt="Preview">`;
+                } else if (currentUpload.type === 'video') {
+                    previewContainer.innerHTML = `<video src="${currentUpload.url}" controls></video>`;
+                } else if (currentUpload.type === 'link') {
+                    previewContainer.innerHTML = `<a href="${currentUpload.url}" target="_blank">${currentUpload.url}</a>`;
+                }
+            }
+        }
+
+        // Update the new post form submission
+        document.querySelector('.new-post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const content = this.querySelector('textarea').value;
+            if (content.trim() || currentUpload) {
+                const newPost = {
+                    id: Date.now(),
+                    author: username,
+                    content: content,
+                    likes: [],
+                    comments: [],
+                    timestamp: new Date().toISOString(),
+                    upload: currentUpload
+                };
+                posts.unshift(newPost);
+                savePosts(posts).then(() => {
+                    renderPosts();
+                    this.reset();
+                    currentUpload = null;
+                    updatePreview();
+                });
+            }
+        });
+
+        // Update createPostElement function to display uploads
+        function createPostElement(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+            let uploadHTML = '';
+            if (post.upload) {
+                if (post.upload.type === 'image') {
+                    uploadHTML = `<img src="${post.upload.url}" alt="Uploaded image">`;
+                } else if (post.upload.type === 'video') {
+                    uploadHTML = `<video src="${post.upload.url}" controls></video>`;
+                } else if (post.upload.type === 'link') {
+                    uploadHTML = `<a href="${post.upload.url}" target="_blank">${post.upload.url}</a>`;
+                }
+            }
+            postElement.innerHTML = `
+                <div class="post-header">
+                    <div>
+                        <span class="post-author">${post.author || 'Anonymous'}</span>
+                        <span class="post-meta">${formatDate(post.timestamp)}</span>
+                    </div>
+                </div>
+                <div class="post-content">${post.content || ''}</div>
+                <div class="post-upload">${uploadHTML}</div>
+                <div class="post-actions">
+                    <button class="post-action like-btn ${(Array.isArray(post.likes) && post.likes.includes(username)) ? 'liked' : ''}" data-post-id="${post.id}">
+                        <i class="fas fa-thumbs-up"></i> Like (${Array.isArray(post.likes) ? post.likes.length : 0})
+                    </button>
+                    <button class="post-action comment-btn" data-post-id="${post.id}">
+                        <i class="fas fa-comment"></i> Comment (${Array.isArray(post.comments) ? post.comments.length : 0})
+                    </button>
+                </div>
+                <div class="comments"></div>
+                <form class="comment-form" data-post-id="${post.id}">
+                    <input type="text" placeholder="Write a comment..." required>
+                    <button type="submit">Send</button>
+                </form>
+            `;
+
+            // Append comments
+            const commentsContainer = postElement.querySelector('.comments');
+            if (Array.isArray(post.comments)) {
+                post.comments.forEach(comment => {
+                    commentsContainer.appendChild(createCommentElement(comment, post.id));
+                });
+            }
+
+            return postElement;
+        }
     </script>
 </body>
 
