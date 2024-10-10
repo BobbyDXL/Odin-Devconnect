@@ -338,7 +338,7 @@
             apiKey: "AIzaSyAgcPHAAOq3SieD4NqCsH-18_aUuoub0_k",
             authDomain: "devconnect-by-odin.firebaseapp.com",
             projectId: "devconnect-by-odin",
-            storageBucket: "devconnect-by-odin.appspot.com",
+            storageBucket: "your-project-id.appspot.com",
             messagingSenderId: "120220982267",
             appId: "1:120220982267:web:8d16a70d30383fc4c6895e",
             measurementId: "G-ML0JGNSH0C"
@@ -456,15 +456,15 @@
                     <input type="text" placeholder="Write a reply..." required>
                     <button type="submit">Send</button>
                 </form>
-                <div class="nested-comments"></div>
             `;
 
-            // Append nested comments
-            const nestedCommentsContainer = commentElement.querySelector('.nested-comments');
             if (comment.replies && Array.isArray(comment.replies)) {
+                const nestedComments = document.createElement('div');
+                nestedComments.className = 'nested-comments';
                 comment.replies.forEach(reply => {
-                    nestedCommentsContainer.appendChild(createCommentElement(reply, postId, depth + 1));
+                    nestedComments.appendChild(createCommentElement(reply, postId, depth + 1));
                 });
+                commentElement.appendChild(nestedComments);
             }
 
             return commentElement;
@@ -535,26 +535,50 @@
         document.querySelector('.new-post-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const content = this.querySelector('textarea').value;
-            if (content.trim()) {
-                const newPost = {
-                    id: Date.now(),
-                    author: username,
-                    content: content,
-                    likes: [],
-                    comments: [],
-                    timestamp: new Date().toISOString()
-                };
-                console.log("Saving new post:", newPost);
-                posts.unshift(newPost);
-                savePosts(posts).then(() => {
-                    console.log("Post saved successfully");
-                    renderPosts();
-                    this.reset();
-                }).catch(error => {
-                    console.error("Error saving post:", error);
-                });
+            if (content.trim() || currentUpload) {
+                if (currentUpload && currentUpload.file) {
+                    // Upload file to Firebase Storage
+                    const storageRef = firebase.storage().ref('uploads/' + currentUpload.file.name);
+                    const uploadTask = storageRef.put(currentUpload.file);
+                    
+                    uploadTask.on('state_changed', 
+                        (snapshot) => {
+                            // You can add a progress indicator here if you want
+                        }, 
+                        (error) => {
+                            console.error("Upload failed:", error);
+                        }, 
+                        () => {
+                            // Upload completed successfully, now we can get the download URL
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                createNewPost(content, { type: currentUpload.type, url: downloadURL });
+                            });
+                        }
+                    );
+                } else {
+                    createNewPost(content, currentUpload);
+                }
             }
         });
+
+        function createNewPost(content, upload) {
+            const newPost = {
+                id: Date.now(),
+                author: username,
+                content: content,
+                likes: [],
+                comments: [],
+                timestamp: new Date().toISOString(),
+                upload: upload
+            };
+            posts.unshift(newPost);
+            savePosts(posts).then(() => {
+                renderPosts();
+                document.querySelector('.new-post-form').reset();
+                currentUpload = null;
+                updatePreview();
+            });
+        }
 
         // Update the event listener for post actions
         document.getElementById('posts-container').addEventListener('click', function (e) {
@@ -698,26 +722,16 @@
         function handleFileUpload(e) {
             const file = e.target.files[0];
             if (file) {
-                const storageRef = storage.ref('uploads/' + file.name);
-                const uploadTask = storageRef.put(file);
-
-                uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        // Handle progress
-                    }, 
-                    (error) => {
-                        console.error("Upload failed:", error);
-                    }, 
-                    () => {
-                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                            currentUpload = {
-                                type: file.type.startsWith('image') ? 'image' : 'video',
-                                url: downloadURL
-                            };
-                            updatePreview();
-                        });
-                    }
-                );
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    currentUpload = {
+                        type: file.type.startsWith('image') ? 'image' : 'video',
+                        file: file,
+                        previewUrl: event.target.result
+                    };
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
             }
         }
 
@@ -734,9 +748,9 @@
             previewContainer.innerHTML = '';
             if (currentUpload) {
                 if (currentUpload.type === 'image') {
-                    previewContainer.innerHTML = `<img src="${currentUpload.url}" alt="Preview">`;
+                    previewContainer.innerHTML = `<img src="${currentUpload.previewUrl}" alt="Preview">`;
                 } else if (currentUpload.type === 'video') {
-                    previewContainer.innerHTML = `<video src="${currentUpload.url}" controls></video>`;
+                    previewContainer.innerHTML = `<video src="${currentUpload.previewUrl}" controls></video>`;
                 } else if (currentUpload.type === 'link') {
                     previewContainer.innerHTML = `<a href="${currentUpload.url}" target="_blank">${currentUpload.url}</a>`;
                 }
