@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevConnect Direct Messages</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="img/Devconnect Favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        .dm-container {
+            display: flex;
+            height: calc(100vh - 60px);
+            background-color: #f0f2f5;
+        }
+        .dm-sidebar {
+            width: 300px;
+            background-color: #fff;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+        }
+        .dm-chat {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .dm-header {
+            padding: 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .dm-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .dm-input {
+            padding: 15px;
+            background-color: #fff;
+            border-top: 1px solid #e0e0e0;
+        }
+        .dm-contact {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+        }
+        .dm-contact:hover {
+            background-color: #f0f2f5;
+        }
+        .dm-contact.active {
+            background-color: #e6f2ff;
+        }
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+        }
+        .message-sent {
+            align-self: flex-end;
+            background-color: #dcf8c6;
+            border-radius: 15px 15px 0 15px;
+            padding: 10px;
+        }
+        .message-received {
+            align-self: flex-start;
+            background-color: #fff;
+            border-radius: 15px 15px 15px 0;
+            padding: 10px;
+        }
+        #message-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+</head>
+<body>
+    <div class="dm-container">
+        <div class="dm-sidebar">
+            <div class="dm-contact active">
+                <h3>John Doe</h3>
+                <p>Last message preview...</p>
+            </div>
+            <div class="dm-contact">
+                <h3>Jane Smith</h3>
+                <p>Last message preview...</p>
+            </div>
+            <!-- Add more contacts as needed -->
+        </div>
+        <div class="dm-chat">
+            <div class="dm-header">
+                <h2>John Doe</h2>
+            </div>
+            <div class="dm-messages" id="message-container">
+                <div class="message message-received">
+                    <p>Hey, how's it going?</p>
+                </div>
+                <div class="message message-sent">
+                    <p>Hi! I'm doing great, thanks for asking. How about you?</p>
+                </div>
+                <!-- Add more messages as needed -->
+            </div>
+            <div class="dm-input">
+                <input type="text" id="message-input" placeholder="Type a message...">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io('http://localhost:3000'); // Replace with your server URL
+        const messageInput = document.getElementById('message-input');
+        const messageContainer = document.getElementById('message-container');
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('message', (message) => {
+            addMessage(message, 'message-received');
+        });
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const message = messageInput.value.trim();
+                if (message) {
+                    socket.emit('message', message);
+                    addMessage(message, 'message-sent');
+                    messageInput.value = '';
+                }
+            }
+        });
+
+        function addMessage(message, className) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', className);
+            messageElement.innerHTML = `<p>${message}</p>`;
+            messageContainer.appendChild(messageElement);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        // Remove the simulated messages interval
+    </script>
+</body>
+</html>

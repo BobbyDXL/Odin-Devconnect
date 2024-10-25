@@ -269,6 +269,12 @@
         .toggle-replies:hover {
             text-decoration: underline;
         }
+
+        .nested-comments {
+            margin-left: 20px;
+            border-left: 2px solid #e0e0e0;
+            padding-left: 10px;
+        }
     </style>
 </head>
 
@@ -492,17 +498,17 @@
             if (comment.replies && Array.isArray(comment.replies) && comment.replies.length > 0) {
                 const nestedComments = document.createElement('div');
                 nestedComments.className = 'nested-comments';
-                if (depth >= 1) {
-                    nestedComments.style.display = 'none';
-                    const toggleButton = document.createElement('button');
-                    toggleButton.className = 'toggle-replies';
-                    toggleButton.textContent = 'Show replies';
-                    toggleButton.onclick = () => {
-                        nestedComments.style.display = nestedComments.style.display === 'none' ? 'block' : 'none';
-                        toggleButton.textContent = nestedComments.style.display === 'none' ? 'Show replies' : 'Hide replies';
-                    };
-                    commentElement.appendChild(toggleButton);
-                }
+                nestedComments.style.display = 'none';
+
+                const toggleButton = document.createElement('button');
+                toggleButton.className = 'toggle-replies';
+                toggleButton.textContent = 'Show replies';
+                toggleButton.onclick = () => {
+                    nestedComments.style.display = nestedComments.style.display === 'none' ? 'block' : 'none';
+                    toggleButton.textContent = nestedComments.style.display === 'none' ? 'Show replies' : 'Hide replies';
+                };
+                commentElement.appendChild(toggleButton);
+
                 comment.replies.forEach(reply => {
                     nestedComments.appendChild(createCommentElement(reply, postId, depth + 1));
                 });
@@ -989,6 +995,16 @@
                 savePosts(posts);
             }
             renderPosts();
+        });
+
+        document.getElementById('posts-container').addEventListener('click', function(e) {
+            if (e.target.classList.contains('toggle-replies')) {
+                const nestedComments = e.target.nextElementSibling;
+                if (nestedComments && nestedComments.classList.contains('nested-comments')) {
+                    nestedComments.style.display = nestedComments.style.display === 'none' ? 'block' : 'none';
+                    e.target.textContent = nestedComments.style.display === 'none' ? 'Show replies' : 'Hide replies';
+                }
+            }
         });
     </script>
 </body>
